@@ -1,15 +1,15 @@
 """
-Main entry point for the Diabetes Analysis project.
-This script orchestrates the entire machine learning pipeline:
-1. Load and explore data
-2. Preprocess data
-3. Train four different models (Naive Bayes, Logistic Regression, Random Forest, XGBoost)
-4. Evaluate all models with cross-validation
-5. Compare models and identify the best performer
-6. Save all results and visualizations
+This script orchestrates the entire machine learning pipeline. 
+It performs the following steps to be able to run the entire code.
+1. Load and explore the dataset
+2. Preprocesses the data
+3. Trains four different models (Gaussian Naïve Bayes, Logistic Regression, Random Forest, XGBoost)
+4. Evaluates all models with cross-validation
+5. Compares models and identifies the best performing model
+6. Saves all results and visualizations in the results file
 
 The project predicts whether a patient has diabetes (0 = no, 1 = yes) using
-patient features such as age, glucose level, BMI, blood pressure, etc.
+demographic and clinical features.
 """
 
 import os
@@ -17,7 +17,7 @@ import sys
 import time
 import pandas as pd
 
-# Add src directory to path
+# Adds src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 from src.data_loader import load_data, explore_data, preprocess_data, prepare_data, apply_smote
@@ -33,10 +33,10 @@ def main():
     Executes all steps: data loading, preprocessing, model training,
     evaluation, and comparison.
     """
-    # Record start time
+    # Starts recording the execution time
     start_time = time.time()
     
-    # Print project header
+    # Prints project header
     print("\n" + "="*70)
     print(" " * 15 + "DIABETES PREDICTION PROJECT")
     print(" " * 10 + "Machine Learning Model Comparison")
@@ -46,7 +46,7 @@ def main():
     print("\nModels: Naive Bayes, Logistic Regression, Random Forest, XGBoost")
     print("="*70)
     
-    # Create results directory if it doesn't exist
+    # Creates results directory if it doesn't exist
     results_dir = os.path.join(os.path.dirname(__file__), 'results')
     os.makedirs(results_dir, exist_ok=True)
     print(f"\n📁 Results will be saved to: {results_dir}\n")
@@ -93,7 +93,7 @@ def main():
     print("█"*70)
     X_train_resampled, y_train_resampled = apply_smote(X_train, y_train, random_state=42)
     
-    # Convert back to DataFrame/Series for compatibility (preserve column names)
+    # Converts back to DataFrame/Series for compatibility (preserves column names)
     if isinstance(X_train, pd.DataFrame):
         X_train_resampled = pd.DataFrame(
             X_train_resampled, 
@@ -102,7 +102,7 @@ def main():
         )
     y_train_resampled = pd.Series(y_train_resampled, name=y_train.name)
     
-    # Use resampled data for training
+    # Uses resampled data for training
     X_train = X_train_resampled
     y_train = y_train_resampled
     
@@ -127,7 +127,7 @@ def main():
     trained_models = {}
     models_predictions = {}  # Store predictions for visualizations
     
-    # Evaluate each model
+    # Evaluates each model
     for idx, (model_name, model) in enumerate(models.items(), 1):
         print(f"\n[{idx}/{len(models)}] Processing: {model_name}")
         
@@ -139,7 +139,7 @@ def main():
             perform_cv=True  # Perform cross-validation
         )
         
-        # Store results
+        # Stores results
         results_dict[model_name] = metrics
         trained_models[model_name] = trained_model
         models_predictions[model_name] = y_pred_proba
@@ -183,7 +183,7 @@ def main():
         if model_name in ['Random Forest', 'XGBoost']:
             print(f"      ✓ feature_importance_{model_name.replace(' ', '_')}.png")
     
-    # Find and display best model
+    # Finds and displays the best performing model
     comparison_df = pd.DataFrame(results_dict).T
     best_model = comparison_df['f1_score'].idxmax()
     best_metrics = comparison_df.loc[best_model]
@@ -202,7 +202,6 @@ def main():
     print("\n" + "="*70)
     print("Thank you for using the Diabetes Prediction System!")
     print("="*70 + "\n")
-
 
 if __name__ == "__main__":
     main()
