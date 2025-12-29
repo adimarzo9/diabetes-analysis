@@ -1,0 +1,11 @@
+Classification Report - Logistic Regression
+======================================================================
+
+              precision    recall  f1-score   support
+
+ No Diabetes       0.97      0.86      0.91       990
+    Diabetes       0.24      0.63      0.34        68
+
+    accuracy                           0.84      1058
+   macro avg       0.60      0.75      0.63      1058
+weighted avg       0.92      0.84      0.88      1058
