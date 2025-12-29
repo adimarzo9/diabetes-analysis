@@ -1,20 +1,32 @@
-# Project Proposal
+# Project Proposal - Alessandro DI MARZO
 
-## Project Title
-Diabetes Analysis
+## Title: "Diabetes Analysis & Forecasting"
 
-## Objective
-[Describe your project objective here]
+## Category:
 
-## Dataset
-[Describe your dataset here]
+- Data analysis
+- Statistical analysis
 
-## Methodology
-[Describe your methodology here]
+## Problem statement or motivaiton:
 
-## Expected Outcomes
-[Describe expected outcomes here]
 
-## Timeline
-[Describe timeline here]
 
+## Planned approach and technologies:
+
+
+
+## Expected challenges and how to approach them:
+
+
+
+## Success criteria:
+
+- Clear visualisation of resource consumption
+- Being able to forecast future consumption with reasonable accuracy
+- Clean and compact coding
+- The data used is useful to reach the goal of the project.
+
+## Stretch goals:
+
+- We could imagine extending the projects to multiple real-world dataset and compare them to learn new patterns and enhance diabetes predictions.
+- We could imagine adding more features in the analysis.
