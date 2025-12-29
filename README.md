@@ -64,9 +64,9 @@ diabetes_analysis/
 
 ## Results
 
-```bash
 - All the results and visualizations are saved in the results file of the project.
 
+```bash
 ======================================================================
 COMPREHENSIVE MODEL COMPARISON
 ======================================================================
