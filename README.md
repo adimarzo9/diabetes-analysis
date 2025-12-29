@@ -3,28 +3,35 @@
 ## Research Question
 Which model best predicts diabetes : Logistic Regression, Random Forest or XGBoost ?
 
-## Setup
+# Setup
 
 ### Using Conda
             
 ### Create environment from environment.yml
+
 conda env create -f environment.yml
 
 ### Activate the environment
+
 conda activate diabetes_analysis project
 
 ### Install XGBoost and imbalanced-learn (not included in environment.yml)
+
 pip install xgboost imbalanced-learn
---------------------
+
 ### Using pip
 
 pip install pandas numpy scikit-learn matplotlib seaborn xgboost 
 
 ## Usage
 
+To run the code : 
+
 python main.py
 
-Expected output: Comparison between four machine learning models; Gaussian Naïve Bayes (as a baseline), Logistic Regression, Random Forest and XGBoost models. The program trains, tests, compares the models and presents which one is the best performing for the applied dataset.
+Expected output:
+
+Comparison between four machine learning models; Gaussian Naïve Bayes (as a baseline), Logistic Regression, Random Forest and XGBoost models. The program trains, tests, compares the models and presents which one is the best performing for the applied dataset.
 
 ## Project Structure
 
