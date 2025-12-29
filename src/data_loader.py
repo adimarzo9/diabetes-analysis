@@ -20,7 +20,6 @@ except ImportError:
     print("SMOTE functionality will not be available.")
     print("Install it using: pip install imbalanced-learn")
 
-
 def load_data(data_path=None):
     """
     Load the diabetes dataset from CSV file.
