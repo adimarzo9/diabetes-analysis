@@ -598,7 +598,6 @@ def plot_metrics_radar(comparison_df, results_dir):
     print(f"  ✓ Saved radar chart: {os.path.basename(plot_path)}")
     plt.close()
 
-
 def plot_comparison(comparison_df, results_dir):
     """
     Creates a bar plot comparing all models across all metrics.
