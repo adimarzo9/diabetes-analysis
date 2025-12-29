@@ -11,17 +11,23 @@ Which model best predicts diabetes : Logistic Regression, Random Forest or XGBoo
 
 ```bash
 conda env create -f environment.yml
+```
 
 ### Activate the environment
 
+```bash
 conda activate diabetes_analysis project
+```
 
 ### Install XGBoost and imbalanced-learn (not included in environment.yml)
 
+```bash
 pip install xgboost imbalanced-learn
+```
 
 ### Using pip
 
+```bash
 pip install pandas numpy scikit-learn matplotlib seaborn xgboost 
 ```
 
