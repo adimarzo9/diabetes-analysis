@@ -36,6 +36,8 @@ def main():
     # Starts recording the execution time
     start_time = time.time()
     
+
+    
     # Prints the project header
     print("\n" + "="*70)
     print(" " * 15 + "DIABETES PREDICTION PROJECT")
