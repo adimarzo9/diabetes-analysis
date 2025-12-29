@@ -9,6 +9,7 @@ Which model best predicts diabetes : Logistic Regression, Random Forest or XGBoo
             
 ### Create environment from environment.yml
 
+```bash
 conda env create -f environment.yml
 
 ### Activate the environment
@@ -22,12 +23,11 @@ pip install xgboost imbalanced-learn
 ### Using pip
 
 pip install pandas numpy scikit-learn matplotlib seaborn xgboost 
+```
 
 ## Usage
 
-To run the code : 
-
-python main.py
+To run the code : python main.py
 
 Expected output:
 
@@ -35,6 +35,7 @@ Comparison between four machine learning models; Gaussian Naïve Bayes (as a bas
 
 ## Project Structure
 
+```bash
 diabetes_analysis/
     ├── data/
     │   └── raw/               # Original data (or instructions to download)
@@ -126,7 +127,9 @@ Rank     Model                     F1-Score     Recall       ROC-AUC
      • Recall:    0.3824
      • F1-Score:  0.3562
      • ROC-AUC:   0.8434
+```
 
 ## Requirements
+
 - Python 3.11
 - scikit-learn, pandas, matplotlib, seaborn
