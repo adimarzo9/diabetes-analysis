@@ -27,7 +27,11 @@ pip install pandas numpy scikit-learn matplotlib seaborn xgboost
 
 ## Usage
 
-To run the code : python main.py
+To run the code : 
+
+```bash
+python main.py
+```
 
 Expected output:
 
