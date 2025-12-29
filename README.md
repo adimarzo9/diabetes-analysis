@@ -50,9 +50,11 @@ diabetes_analysis/
     ├── main.py               # Entry point - THIS MUST WORK
     ├── PROPOSAL.md           # Your project proposal
     └── README.md             # Setup and usage instructions
+```
 
 ## Results
 
+```bash
 - All the results and visualizations are saved in the results file of the project.
 
 ======================================================================
