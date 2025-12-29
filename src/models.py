@@ -24,7 +24,6 @@ except ImportError:
         "Or add it to your conda environment: conda install -c conda-forge xgboost"
     )
 
-
 def get_models():
     """
     Creates and returns a dictionary of all four machine learning models.
