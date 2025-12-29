@@ -1,120 +1,125 @@
-# Diabetes Analysis Project
+# Diabetes Prediction : Model Comparison
 
-## Setup and Usage Instructions
+## Research Question
+Which model best predicts diabetes : Logistic Regression, Random Forest or XGBoost ?
 
-### Prerequisites
-- Python 3.11 (as specified in environment.yml)
-- Conda (recommended) or pip
+## Setup
 
-### Installation
-
-#### Using Conda (Recommended)
-```bash
-# Create environment from environment.yml
+### Using Conda
+            
+### Create environment from environment.yml
 conda env create -f environment.yml
 
-# Activate the environment
+### Activate the environment
 conda activate diabetes_analysis project
 
-# Install XGBoost and imbalanced-learn (not included in environment.yml)
+### Install XGBoost and imbalanced-learn (not included in environment.yml)
 pip install xgboost imbalanced-learn
-```
+--------------------
+### Using pip
 
-#### Using pip (Alternative)
-If you prefer pip, install the required packages:
-```bash
-pip install pandas numpy scikit-learn matplotlib seaborn xgboost
-```
+pip install pandas numpy scikit-learn matplotlib seaborn xgboost 
 
-### Project Structure
+## Usage
 
-```
-Diabetes_analysis/
-├── README.md              # Setup and usage instructions
-├── PROPOSAL.md            # Your project proposal
-├── environment.yml        # Conda dependencies
-├── main.py               # Entry point - THIS MUST WORK
-├── src/                  # Source code modules
-│   ├── __init__.py
-│   ├── data_loader.py    # Data loading and preprocessing
-│   ├── models.py         # Model definitions
-│   └── evaluation.py     # Evaluation and visualization
-├── data/
-│   └── raw/              # Original data
-│       └── diabetes_analysis.csv
-├── results/              # Output figures and metrics
-└── notebooks/            # Jupyter notebooks (optional, for exploration)
-```
+python main.py
 
-### Running the Project
+Expected output: Comparison between four machine learning models; Gaussian Naïve Bayes (as a baseline), Logistic Regression, Random Forest and XGBoost models. The program trains, tests, compares the models and presents which one is the best performing for the applied dataset.
 
-1. **Ensure you're in the project root directory:**
-   ```bash
-   cd Diabetes_analysis
-   ```
+## Project Structure
 
-2. **Verify the data file exists:**
-   ```bash
-   ls data/raw/diabetes_analysis.csv
-   ```
+diabetes_analysis/
+    ├── data/
+    │   └── raw/               # Original data (or instructions to download)
+    ├── results/              # Output figures and metrics
+    ├── src/                  # Source code modules
+    │   ├── __init__.py
+    │   ├── data_loader.py     # Data loading and preprocessing
+    │   ├── evaluation.py      # Evaluation and visualization
+    │   └── models.py          # Model definitions
+    ├── AI_USAGE.md           # AI usage
+    ├── environment.yml       # Conda dependencies
+    ├── main.py               # Entry point - THIS MUST WORK
+    ├── PROPOSAL.md           # Your project proposal
+    └── README.md             # Setup and usage instructions
 
-3. **Run the main script:**
-   ```bash
-   python main.py
-   ```
+## Results
 
-### Data
+- All the results and visualizations are saved in the results file of the project.
 
-The dataset (`diabetes_analysis.csv`) should be located in `data/raw/` directory.
+======================================================================
+COMPREHENSIVE MODEL COMPARISON
+======================================================================
 
-**Dataset Features:**
-- age, gender, pulse_rate, systolic_bp, diastolic_bp, glucose
-- height, weight, bmi
-- family_diabetes, hypertensive, family_hypertension
-- cardiovascular_disease, stroke
+[1] Performance Metrics Comparison:
+----------------------------------------------------------------------
+                     accuracy  precision  recall  f1_score  roc_auc
+Naive Bayes            0.8450     0.2363  0.6324    0.3440   0.8253
+Logistic Regression    0.8450     0.2363  0.6324    0.3440   0.8259
+Random Forest          0.9112     0.3333  0.3824    0.3562   0.8434
+XGBoost                0.9216     0.3469  0.2500    0.2906   0.8526
 
-### Models
+[2] Best Model by Metric:
+----------------------------------------------------------------------
+Metric               Best Model                Score          
+----------------------------------------------------------------------
+Accuracy             XGBoost                   0.9216
+Precision            XGBoost                   0.3469
+Recall               Naive Bayes               0.6324
+F1-Score             Random Forest             0.3562
+ROC-AUC              XGBoost                   0.8526
 
-The project compares four machine learning models:
-1. **Naive Bayes** - Baseline probabilistic model
-2. **Logistic Regression** - Linear model with StandardScaler pipeline
-3. **Random Forest** - Ensemble of decision trees
-4. **XGBoost** - Gradient boosting model
+[3] Model Selection for Imbalanced Dataset:
+----------------------------------------------------------------------
+  Note: For imbalanced datasets, we prioritize:
+    • Recall: Ability to identify diabetes cases (minimize false negatives)
+    • F1-Score: Balance between precision and recall
 
-### Results
+  Best F1-Score: Random Forest (0.3562)
+  Best Recall:    Naive Bayes (0.6324)
 
-All results will be saved in the `results/` directory:
-- Model comparison tables (CSV)
-- Confusion matrices (PNG)
-- ROC curves comparison (PNG)
-- Precision-Recall curves (PNG)
-- Feature importance plots (PNG)
-- Classification reports (TXT)
+[4] Overall Best Model (Selected by F1-Score):
+----------------------------------------------------------------------
+  🏆 WINNER: Random Forest
+  Best F1-Score: 0.3562
+  (F1-Score balances precision and recall, ideal for imbalanced datasets)
 
-### Troubleshooting
+  Complete Performance:
+    Accuracy:  0.9112
+    Precision: 0.3333
+    Recall:    0.3824 ⭐ (Key metric for minority class)
+    F1-Score:  0.3562 ⭐ (Key metric for imbalanced data)
+    ROC-AUC:   0.8434
 
-**Issue: XGBoost not found**
-```bash
-pip install xgboost
-```
+[5] Model Rankings (Prioritizing Recall & F1-Score):
+----------------------------------------------------------------------
+Rank     Model                     F1-Score     Recall       ROC-AUC     
+----------------------------------------------------------------------
+🏆        Random Forest             0.3562    0.3824    0.8434
+2.       Logistic Regression       0.3440    0.6324    0.8259
+3.       Naive Bayes               0.3440    0.6324    0.8253
+4.       XGBoost                   0.2906    0.2500    0.8526
 
-**Issue: SMOTE/imbalanced-learn not found**
-```bash
-pip install imbalanced-learn
-```
+======================================================================
+                    ANALYSIS COMPLETE!
+======================================================================
 
-**Issue: Data file not found**
-- Ensure you're running `python main.py` from the project root directory
-- Verify `data/raw/diabetes_analysis.csv` exists
-- Check the error message for the expected path
+⏱️  Total execution time: 33.63 seconds (0.56 minutes)
+📁 All results saved to: /files/capstone_project/diabetes_analysis/results
 
-**Issue: Import errors**
-- Make sure the conda environment is activated: `conda activate diabetes_analysis project`
-- Verify all dependencies are installed: `conda list`
+======================================================================
+               FINAL RECOMMENDATION
+======================================================================
 
-### Notes
+🏆 Best Model for Diabetes Prediction: Random Forest
 
-- All models use `random_state=42` for reproducibility
-- The code automatically handles data preprocessing and encoding
-- Results are saved automatically to the `results/` directory
-- The project uses 80/20 train/test split with stratification
+   Performance Metrics:
+     • Accuracy:  0.9112
+     • Precision: 0.3333
+     • Recall:    0.3824
+     • F1-Score:  0.3562
+     • ROC-AUC:   0.8434
+
+## Requirements
+- Python 3.11
+- scikit-learn, pandas, matplotlib, seaborn
