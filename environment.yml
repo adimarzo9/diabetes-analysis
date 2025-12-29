@@ -1,7 +1,11 @@
 name: diabetes_analysis project
+
 channels:
+
   - conda-forge
+
 dependencies:
+
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=2_gnu
   - alsa-lib=1.2.14=hb9d3cd8_0
@@ -151,4 +155,5 @@ dependencies:
   - xorg-libxxf86vm=1.1.6=hb9d3cd8_0
   - zlib-ng=2.3.1=h54a6638_1
   - zstd=1.5.7=h3691f8a_5
+
 prefix: /opt/conda/envs/diabetes_analysis
