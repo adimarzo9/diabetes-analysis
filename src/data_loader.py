@@ -36,8 +36,7 @@ def load_data(data_path=None):
         Loaded dataset
     """
     if data_path is None:
-        # Get the project root directory (3 levels up from this file: src/data_loader.py)
-        # More robust path resolution that works when sharing the project
+        # Get the project root directory
         current_file = os.path.abspath(__file__)
         project_root = os.path.dirname(os.path.dirname(os.path.dirname(current_file)))
         
@@ -71,7 +70,7 @@ def load_data(data_path=None):
     print("="*70)
     print(f"Loading data from: {data_path}")
     
-    # Verify file exists before attempting to load
+    # Verifies if the file exists before attempting to load it
     if not os.path.exists(data_path):
         error_msg = f"✗ Error: File not found at {data_path}\n"
         error_msg += f"  Current working directory: {os.getcwd()}\n"
@@ -195,7 +194,7 @@ def preprocess_data(data):
     print("DATA PREPROCESSING")
     print("="*70)
     
-    # Make a copy to avoid modifying the original data
+    # Makes a copy of the data to avoid modifying the original data
     df = data.copy()
     
     print(f"\n[1] Initial Data Shape: {df.shape}")
@@ -206,7 +205,7 @@ def preprocess_data(data):
     missing = df.isnull().sum()
     if missing.sum() > 0:
         print(f"  Found {missing.sum()} missing values across {missing[missing > 0].shape[0]} columns")
-        # Fill missing values with median for numeric columns
+        # Fills missing values with the median value for numeric columns
         numeric_cols = df.select_dtypes(include=[np.number]).columns
         for col in numeric_cols:
             if df[col].isnull().sum() > 0:
@@ -238,7 +237,7 @@ def preprocess_data(data):
         target_dist = df['diabetic'].value_counts()
         print(f"  Target distribution: {dict(target_dist)}")
     
-    # Convert the feature "gender" to binary form (0/1) if it exists
+    # Converts the feature "gender" to binary form (0/1) if it exists
     print("\n[4] Encoding Categorical Features:")
     print("-" * 70)
     if 'gender' in df.columns:
@@ -312,7 +311,7 @@ def prepare_data(data, test_size=0.2, random_state=42):
         class_name = "No Diabetes" if label == 0 else "Diabetes"
         print(f"  {class_name} ({label}): {count:>6} samples ({pct:>5.2f}%)")
     
-    # Split into training and testing sets with stratification
+    # Splits the data into training and testing sets with stratification
     print("\n[3] Splitting Data into Train/Test Sets:")
     print("-" * 70)
     print(f"  Train size: {1-test_size:.0%} ({int(len(data) * (1-test_size))} samples)")
@@ -400,11 +399,11 @@ def apply_smote(X_train, y_train, random_state=42):
     print(f"\n  Total samples: {len(y_train)}")
     print(f"  Imbalance ratio: {train_counts_before[0] / train_counts_before[1]:.2f}:1")
     
-    # Convert to numpy arrays if they are DataFrames/Series
+    # Converts to numpy arrays if they are DataFrames/Series
     X_train_array = X_train.values if isinstance(X_train, pd.DataFrame) else X_train
     y_train_array = y_train.values if isinstance(y_train, pd.Series) else y_train
     
-    # Apply SMOTE
+    # Applies SMOTE
     print("\n[2] Applying SMOTE:")
     print("-" * 70)
     print("  Strategy: Oversample minority class to match majority class")

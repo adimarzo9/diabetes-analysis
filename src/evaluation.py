@@ -1,7 +1,7 @@
 """
 Evaluation and visualization module.
 This module handles model training, prediction, evaluation, cross-validation,
-hyperparameter and comprehensive model comparison.
+hyperparameters and comprehensive model comparison.
 It includes structured terminal outputs and visualization functions.
 """
 
@@ -70,7 +70,7 @@ def make_predictions(model, X_test):
 
 def compute_metrics(y_true, y_pred, y_pred_proba):
     """
-    Compute comprehensive evaluation metrics for a model.
+    Computes comprehensive evaluation metrics for a model.
     
     Parameters:
     -----------
@@ -99,7 +99,7 @@ def compute_metrics(y_true, y_pred, y_pred_proba):
 
 def get_confusion_matrix(y_true, y_pred):
     """
-    Generate confusion matrix.
+    Generates confusion matrix for a model.
     
     Parameters:
     -----------
@@ -119,7 +119,7 @@ def get_confusion_matrix(y_true, y_pred):
 
 def plot_confusion_matrix(cm, model_name, save_path=None):
     """
-    Plot and save confusion matrix with annotations.
+    Plots and saves confusion matrix with annotations.
     
     Parameters:
     -----------
@@ -132,7 +132,7 @@ def plot_confusion_matrix(cm, model_name, save_path=None):
     """
     plt.figure(figsize=(8, 6))
     
-    # Create heatmap
+    # Creates heatmap to compare all models
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
                 xticklabels=['No Diabetes', 'Diabetes'],
                 yticklabels=['No Diabetes', 'Diabetes'],
@@ -142,7 +142,7 @@ def plot_confusion_matrix(cm, model_name, save_path=None):
     plt.ylabel('True Label', fontsize=12)
     plt.xlabel('Predicted Label', fontsize=12)
     
-    # Add text annotations with percentages
+    # Adds text annotations with percentages
     total = cm.sum()
     for i in range(2):
         for j in range(2):
@@ -185,10 +185,10 @@ def cross_validate_model(model, X_train, y_train, model_name, cv=5):
     """
     print(f"\n  Cross-validating {model_name} ({cv}-fold)...")
     
-    # Use stratified K-fold for classification
+    # Uses stratified K-fold for classification
     cv_strategy = StratifiedKFold(n_splits=cv, shuffle=True, random_state=42)
     
-    # Compute cross-validation scores for different metrics
+    # Computes cross-validation scores for different metrics
     scoring_metrics = {
         'accuracy': 'accuracy',
         'precision': 'precision',
@@ -213,7 +213,7 @@ def cross_validate_model(model, X_train, y_train, model_name, cv=5):
 
 def print_cv_results(cv_results, model_name):
     """
-    Print cross-validation results in a structured format.
+    Prints cross-validation results in a structured format.
     
     Parameters:
     -----------
@@ -239,8 +239,8 @@ def print_cv_results(cv_results, model_name):
 
 def evaluate_model(model, model_name, X_train, y_train, X_test, y_test, results_dir, perform_cv=True):
     """
-    Complete evaluation pipeline for a single model.
-    Trains, predicts, computes metrics, performs cross-validation, and saves results.
+    Completes evaluation pipeline for a single model.
+    It trains, predicts, computes metrics, performs cross-validation, and saves results in the results file.
     
     Parameters:
     -----------
@@ -276,12 +276,12 @@ def evaluate_model(model, model_name, X_train, y_train, X_test, y_test, results_
     print(f"EVALUATING MODEL: {model_name.upper()}")
     print("="*70)
     
-    # Train the model
+    # Trains the model
     print("\n[1] Model Training:")
     print("-" * 70)
     trained_model = train_model(model, X_train, y_train, model_name)
     
-    # Make predictions
+    # Makes predictions
     print("\n[2] Making Predictions:")
     print("-" * 70)
     print("  Generating predictions on test set...", end=" ", flush=True)
@@ -290,12 +290,12 @@ def evaluate_model(model, model_name, X_train, y_train, X_test, y_test, results_
     print(f"  Predicted {len(y_pred)} samples")
     print(f"  Class distribution: {np.bincount(y_pred)}")
     
-    # Compute metrics
+    # Computes the evaluation metrics
     print("\n[3] Computing Evaluation Metrics:")
     print("-" * 70)
     metrics = compute_metrics(y_test, y_pred, y_pred_proba)
     
-    # Print metrics in structured format
+    # Prints evaluation metrics in structured format
     print(f"\n  Test Set Performance Metrics:")
     print("  " + "-" * 60)
     print(f"  {'Metric':<20} {'Score':<15} {'Interpretation'}")
@@ -307,12 +307,12 @@ def evaluate_model(model, model_name, X_train, y_train, X_test, y_test, results_
     print(f"  {'ROC-AUC':<20} {metrics['roc_auc']:>6.4f}        {'Area under ROC curve'}")
     print("  " + "-" * 60)
     
-    # Generate confusion matrix
+    # Generates confusion matrix
     print("\n[4] Confusion Matrix Analysis:")
     print("-" * 70)
     cm = get_confusion_matrix(y_test, y_pred)
     
-    # Print confusion matrix
+    # Prints confusion matrix
     print("\n  Confusion Matrix:")
     print("  " + "-" * 40)
     print(f"  {'':<15} {'Predicted No':<15} {'Predicted Yes':<15}")
@@ -321,7 +321,7 @@ def evaluate_model(model, model_name, X_train, y_train, X_test, y_test, results_
     print(f"  {'Actual Yes':<15} {cm[1,0]:<15} {cm[1,1]:<15}")
     print("  " + "-" * 40)
     
-    # Calculate additional metrics from confusion matrix
+    # Calculates additional metrics from confusion matrix
     tn, fp, fn, tp = cm.ravel()
     print(f"\n  Detailed Breakdown:")
     print(f"    True Negatives (TN):  {tn:>6} - Correctly predicted no diabetes")
@@ -329,18 +329,18 @@ def evaluate_model(model, model_name, X_train, y_train, X_test, y_test, results_
     print(f"    False Negatives (FN): {fn:>6} - Missed diabetes cases")
     print(f"    True Positives (TP):  {tp:>6} - Correctly predicted diabetes")
     
-    # Save confusion matrix plot
+    # Saves confusion matrix plot
     cm_path = os.path.join(results_dir, f'confusion_matrix_{model_name.replace(" ", "_")}.png')
     plot_confusion_matrix(cm, model_name, cm_path)
     
-    # Save classification report
+    # Saves classification report
     print("\n[5] Classification Report:")
     print("-" * 70)
     report = classification_report(y_test, y_pred, 
                                    target_names=['No Diabetes', 'Diabetes'],
                                    output_dict=True)
     
-    # Print classification report
+    # Prints classification report
     print("\n  Per-Class Metrics:")
     print("  " + "-" * 60)
     print(f"  {'Class':<15} {'Precision':<12} {'Recall':<12} {'F1-Score':<12} {'Support'}")
@@ -354,7 +354,7 @@ def evaluate_model(model, model_name, X_train, y_train, X_test, y_test, results_
     print(f"  {'Macro Avg':<15} {report['macro avg']['precision']:>6.4f}      {report['macro avg']['recall']:>6.4f}      {report['macro avg']['f1-score']:>6.4f}      {int(report['macro avg']['support']):>6}")
     print(f"  {'Weighted Avg':<15} {report['weighted avg']['precision']:>6.4f}      {report['weighted avg']['recall']:>6.4f}      {report['weighted avg']['f1-score']:>6.4f}      {int(report['weighted avg']['support']):>6}")
     
-    # Save classification report to file
+    # Saves classification report to the results file
     report_path = os.path.join(results_dir, f'classification_report_{model_name.replace(" ", "_")}.txt')
     with open(report_path, 'w') as f:
         f.write(f"Classification Report - {model_name}\n")
@@ -378,7 +378,7 @@ def evaluate_model(model, model_name, X_train, y_train, X_test, y_test, results_
 
 def plot_roc_curves(models_data, y_test, results_dir):
     """
-    Plot ROC curves for all models on the same graph for comparison.
+    Plots ROC curves for all models on the same graph for comparison.
     
     Parameters:
     -----------
@@ -391,14 +391,14 @@ def plot_roc_curves(models_data, y_test, results_dir):
     """
     plt.figure(figsize=(10, 8))
     
-    # Plot diagonal line (random classifier baseline)
+    # Plots diagonal line (random classifier baseline) on the ROC curve graph
     plt.plot([0, 1], [0, 1], 'k--', label='Random Classifier (AUC = 0.50)', 
              linewidth=2, alpha=0.7)
     
-    # Define colors for each model
+    # Defines the colors for each model
     colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
     
-    # Plot ROC curve for each model
+    # Plots ROC curve for each model
     for idx, (model_name, y_pred_proba) in enumerate(models_data.items()):
         fpr, tpr, _ = roc_curve(y_test, y_pred_proba)
         roc_auc = auc(fpr, tpr)
@@ -421,7 +421,7 @@ def plot_roc_curves(models_data, y_test, results_dir):
 
 def plot_precision_recall_curves(models_data, y_test, results_dir):
     """
-    Plot Precision-Recall curves for all models on the same graph.
+    Plots Precision-Recall curves for all models on the same graph.
     
     Parameters:
     -----------
@@ -434,10 +434,10 @@ def plot_precision_recall_curves(models_data, y_test, results_dir):
     """
     plt.figure(figsize=(10, 8))
     
-    # Define colors for each model
+    # Defines the colors for each model
     colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
     
-    # Plot Precision-Recall curve for each model
+    # Plots Precision-Recall curve for each model
     for idx, (model_name, y_pred_proba) in enumerate(models_data.items()):
         precision, recall, _ = precision_recall_curve(y_test, y_pred_proba)
         pr_auc = auc(recall, precision)
@@ -461,7 +461,7 @@ def plot_precision_recall_curves(models_data, y_test, results_dir):
 
 def plot_feature_importance(model, model_name, feature_names, results_dir, top_n=15):
     """
-    Plot feature importance for tree-based models (Random Forest, XGBoost).
+    Plots feature importance for tree-based models (Random Forest and XGBoost models).
     
     Parameters:
     -----------
@@ -476,7 +476,7 @@ def plot_feature_importance(model, model_name, feature_names, results_dir, top_n
     top_n : int, default=15
         Number of top features to display
     """
-    # Check if model has feature_importances_ attribute
+    # Checks if the model has feature_importances_ attribute
     importances = None
     
     if hasattr(model, 'feature_importances_'):
@@ -491,13 +491,13 @@ def plot_feature_importance(model, model_name, feature_names, results_dir, top_n
     if importances is None:
         return  # No feature importance available
     
-    # Get feature importance
+    # Gets feature importance
     feature_imp = pd.DataFrame({
         'feature': feature_names,
         'importance': importances
     }).sort_values('importance', ascending=False).head(top_n)
     
-    # Plot
+    # Plots feature importance
     plt.figure(figsize=(10, 8))
     bars = plt.barh(range(len(feature_imp)), feature_imp['importance'], 
                     color='steelblue', edgecolor='navy', linewidth=1.5)
@@ -508,7 +508,7 @@ def plot_feature_importance(model, model_name, feature_names, results_dir, top_n
     plt.gca().invert_yaxis()
     plt.grid(axis='x', alpha=0.3, linestyle='--')
     
-    # Add value labels on bars
+    # Adds value labels on bars
     for i, (idx, row) in enumerate(feature_imp.iterrows()):
         plt.text(row['importance'], i, f' {row["importance"]:.4f}', 
                 va='center', fontsize=9)
@@ -523,7 +523,7 @@ def plot_feature_importance(model, model_name, feature_names, results_dir, top_n
 
 def plot_metrics_heatmap(comparison_df, results_dir):
     """
-    Create a heatmap visualization of all metrics for all models.
+    Creates a heatmap visualization of all metrics for all models for performance comparison.
     
     Parameters:
     -----------
@@ -534,7 +534,7 @@ def plot_metrics_heatmap(comparison_df, results_dir):
     """
     plt.figure(figsize=(10, 6))
     
-    # Create heatmap
+    # Creates heatmap to compare all trained models
     sns.heatmap(comparison_df.T, annot=True, fmt='.4f', cmap='YlOrRd', 
                 cbar_kws={'label': 'Score'}, linewidths=0.5, 
                 square=False, vmin=0, vmax=1)
@@ -566,13 +566,13 @@ def plot_metrics_radar(comparison_df, results_dir):
     metrics = ['accuracy', 'precision', 'recall', 'f1_score', 'roc_auc']
     num_metrics = len(metrics)
     
-    # Compute angle for each metric
+    # Computes angle for each metric
     angles = np.linspace(0, 2 * np.pi, num_metrics, endpoint=False).tolist()
     angles += angles[:1]  # Complete the circle
     
     fig, ax = plt.subplots(figsize=(10, 10), subplot_kw=dict(projection='polar'))
     
-    # Plot each model
+    # Plots each model in the radar chart
     colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
     for idx, (model_name, row) in enumerate(comparison_df.iterrows()):
         values = [row[metric] for metric in metrics]
@@ -582,7 +582,7 @@ def plot_metrics_radar(comparison_df, results_dir):
                color=colors[idx % len(colors)], markersize=8)
         ax.fill(angles, values, alpha=0.25, color=colors[idx % len(colors)])
     
-    # Set labels
+    # Sets labels
     ax.set_xticks(angles[:-1])
     ax.set_xticklabels([m.replace('_', ' ').title() for m in metrics], fontsize=11)
     ax.set_ylim(0, 1)
@@ -601,7 +601,7 @@ def plot_metrics_radar(comparison_df, results_dir):
 
 def plot_comparison(comparison_df, results_dir):
     """
-    Create a bar plot comparing all models across all metrics.
+    Creates a bar plot comparing all models across all metrics.
     
     Parameters:
     -----------
@@ -612,12 +612,12 @@ def plot_comparison(comparison_df, results_dir):
     """
     fig, ax = plt.subplots(figsize=(12, 6))
     
-    # Prepare data for plotting
+    # Prepares the data for plotting
     metrics = ['accuracy', 'precision', 'recall', 'f1_score', 'roc_auc']
     x = np.arange(len(comparison_df.index))
     width = 0.15
     
-    # Define colors for each metric
+    # Defines the colors for each metric
     colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
     
     for i, metric in enumerate(metrics):
@@ -644,7 +644,7 @@ def plot_comparison(comparison_df, results_dir):
 
 def compare_models(results_dict, models_predictions, trained_models, X_train, y_test, results_dir):
     """
-    Compare all models and create a comprehensive summary with visualizations.
+    Compares all models and creates a comprehensive summary with visualizations.
     Prints structured comparison table and identifies the best model.
     
     Parameters:
@@ -666,16 +666,16 @@ def compare_models(results_dict, models_predictions, trained_models, X_train, y_
     print("COMPREHENSIVE MODEL COMPARISON")
     print("="*70)
     
-    # Create DataFrame for comparison
+    # Creates DataFrame for comparison
     comparison_df = pd.DataFrame(results_dict).T
     comparison_df = comparison_df.round(4)
     
-    # Print comparison table
+    # Prints comparison table
     print("\n[1] Performance Metrics Comparison:")
     print("-" * 70)
     print(comparison_df.to_string())
     
-    # Find best model for each metric
+    # Finds best model for each metric
     print("\n[2] Best Model by Metric:")
     print("-" * 70)
     print(f"{'Metric':<20} {'Best Model':<25} {'Score':<15}")
@@ -686,16 +686,15 @@ def compare_models(results_dict, models_predictions, trained_models, X_train, y_
     print(f"{'F1-Score':<20} {comparison_df['f1_score'].idxmax():<25} {comparison_df['f1_score'].max():>6.4f}")
     print(f"{'ROC-AUC':<20} {comparison_df['roc_auc'].idxmax():<25} {comparison_df['roc_auc'].max():>6.4f}")
     
-    # Overall best model - Focus on Recall and F1-Score for imbalanced dataset
-    # For imbalanced datasets, we prioritize Recall (to catch more diabetes cases)
-    # and F1-Score (to balance precision and recall)
+    # The overall best result is focused on Recall and F1-Score as we have an imbalanced dataset
+    # For imbalanced datasets, we prioritize Recall (to catch more diabetes cases) and F1-Score (to balance the precision and recall metrics)
     print("\n[3] Model Selection for Imbalanced Dataset:")
     print("-" * 70)
     print("  Note: For imbalanced datasets, we prioritize:")
     print("    • Recall: Ability to identify diabetes cases (minimize false negatives)")
     print("    • F1-Score: Balance between precision and recall")
     
-    # Find best model by F1-score (primary) and Recall (secondary)
+    # Finds best model by F1-score (primary criteria) and Recall (secondary criteria)
     best_model_f1 = comparison_df['f1_score'].idxmax()
     best_model_recall = comparison_df['recall'].idxmax()
     best_f1 = comparison_df.loc[best_model_f1, 'f1_score']
@@ -719,10 +718,10 @@ def compare_models(results_dict, models_predictions, trained_models, X_train, y_
     print(f"    F1-Score:  {comparison_df.loc[best_model, 'f1_score']:.4f} ⭐ (Key metric for imbalanced data)")
     print(f"    ROC-AUC:   {comparison_df.loc[best_model, 'roc_auc']:.4f}")
     
-    # Rank all models - Focus on Recall and F1-Score for imbalanced dataset
+    # Ranks all models with a focus on Recall and F1-Score as we have an imbalanced dataset
     print("\n[5] Model Rankings (Prioritizing Recall & F1-Score):")
     print("-" * 70)
-    # Rank by F1-score (primary), then by Recall (secondary), then by ROC-AUC
+    # Ranks by F1-score (primary criteria), then by Recall (secondary criteria), then by ROC-AUC
     ranked = comparison_df.sort_values(['f1_score', 'recall', 'roc_auc'], ascending=False)
     print(f"{'Rank':<8} {'Model':<25} {'F1-Score':<12} {'Recall':<12} {'ROC-AUC':<12}")
     print("-" * 70)
@@ -730,12 +729,12 @@ def compare_models(results_dict, models_predictions, trained_models, X_train, y_
         marker = "🏆" if rank == 1 else f"{rank}."
         print(f"{marker:<8} {model_name:<25} {row['f1_score']:>6.4f}    {row['recall']:>6.4f}    {row['roc_auc']:>6.4f}")
     
-    # Save comparison table
+    # Saves comparison table
     comparison_path = os.path.join(results_dir, 'model_comparison.csv')
     comparison_df.to_csv(comparison_path)
     print(f"\n  ✓ Saved comparison table: {os.path.basename(comparison_path)}")
     
-    # Create and save all comparison visualizations
+    # Creates and saves all comparison visualizations into the results file
     print("\n[6] Generating Visualizations:")
     print("-" * 70)
     plot_comparison(comparison_df, results_dir)
@@ -744,7 +743,7 @@ def compare_models(results_dict, models_predictions, trained_models, X_train, y_
     plot_roc_curves(models_predictions, y_test, results_dir)
     plot_precision_recall_curves(models_predictions, y_test, results_dir)
     
-    # Plot feature importance for tree-based models
+    # Plots the feature importance charts for tree-based models (Random Forest and XGBoost)
     feature_names = X_train.columns.tolist()
     for model_name, model in trained_models.items():
         if model_name in ['Random Forest', 'XGBoost']:

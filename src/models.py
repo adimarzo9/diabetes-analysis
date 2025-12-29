@@ -1,10 +1,10 @@
 """
-Model definitions for the Diabetes Analysis project.
-This module creates and returns all four machine learning models to compare:
-1. Gaussian Naive Bayes (baseline)
+This module defines the machine learning models used in this project.
+It creates and returns all four machine learning models to compare:
+1. Gaussian Naïve Bayes (as a baseline)
 2. Logistic Regression (with StandardScaler pipeline)
-3. Random Forest Classifier
-4. XGBoost Classifier
+3. Random Forest
+4. XGBoost
 
 All models use random_state=42 for reproducibility.
 """
@@ -15,7 +15,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-# Import xgboost with helpful error message if not available
+# Imports xgboost with helpful error message if not available
 try:
     import xgboost as xgb
 except ImportError:
@@ -27,12 +27,11 @@ except ImportError:
 
 def get_models():
     """
-    Create and return a dictionary of all four machine learning models.
-    All models use random_state=42 for reproducibility.
+    Creates and returns a dictionary of all four machine learning models.
     
     Models included:
     - Gaussian Naive Bayes: Simple probabilistic baseline model
-    - Logistic Regression: Linear model with StandardScaler in pipeline
+    - Logistic Regression: Linear model with StandardScaler in pipeline (hyperparameter)
     - Random Forest: Ensemble of decision trees with default hyperparameters
     - XGBoost: Gradient boosting model with default hyperparameters
     
@@ -50,7 +49,6 @@ def get_models():
         'Naive Bayes': GaussianNB(),
         
         # 2. Logistic Regression with StandardScaler in a pipeline
-        # Scaling is done inside the pipeline, not globally
         'Logistic Regression': Pipeline([
             ('scaler', StandardScaler()),
             ('classifier', LogisticRegression(
@@ -60,33 +58,33 @@ def get_models():
             ))
         ]),
         
-        # 3. Random Forest Classifier
-        # Using sensible default hyperparameters
+        # 3. Random Forest Model
+        # Using default hyperparameters
         'Random Forest': RandomForestClassifier(
-            n_estimators=100,      # Number of trees in the forest
+            n_estimators=100,       # Number of trees in the forest
             max_depth=10,           # Maximum depth of trees
             min_samples_split=5,    # Minimum samples to split a node
             min_samples_leaf=2,     # Minimum samples in a leaf
             random_state=42,
-            n_jobs=-1              # Use all available CPU cores
+            n_jobs=-1               # Use all available CPU cores
         ),
         
-        # 4. XGBoost Classifier
-        # Using sensible default hyperparameters
+        # 4. XGBoost Model
+        # Using default hyperparameters
         'XGBoost': xgb.XGBClassifier(
             n_estimators=100,       # Number of boosting rounds
             max_depth=6,            # Maximum tree depth
             learning_rate=0.1,      # Step size shrinkage
-            subsample=0.8,         # Subsample ratio of training instances
-            colsample_bytree=0.8,  # Subsample ratio of columns
+            subsample=0.8,          # Subsample ratio of training instances
+            colsample_bytree=0.8,   # Subsample ratio of columns
             random_state=42,
             eval_metric='logloss',
             use_label_encoder=False,
-            n_jobs=-1              # Use all available CPU cores
+            n_jobs=-1               # Use all available CPU cores
         )
     }
     
-    # Print model information
+    # Prints models'information
     print("\n[1] Model Summary:")
     print("-" * 70)
     print(f"{'Model Name':<25} {'Type':<30} {'Description'}")
@@ -106,7 +104,7 @@ def get_models():
                 print(f"      Step '{step_name}': {type(step_model).__name__}")
         else:
             print(f"    - Type: {type(model).__name__}")
-            # Print key hyperparameters
+            # Prints key hyperparameters
             if hasattr(model, 'n_estimators'):
                 print(f"    - n_estimators: {model.n_estimators}")
             if hasattr(model, 'max_depth'):
