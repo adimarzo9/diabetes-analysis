@@ -324,10 +324,10 @@ def evaluate_model(model, model_name, X_train, y_train, X_test, y_test, results_
     # Calculates additional metrics from confusion matrix
     tn, fp, fn, tp = cm.ravel()
     print("\n  Detailed Breakdown:")
-    print("    True Negatives (TN):  {tn:>6} - Correctly predicted no diabetes")
-    print("    False Positives (FP): {fp:>6} - Incorrectly predicted diabetes")
-    print("    False Negatives (FN): {fn:>6} - Missed diabetes cases")
-    print("    True Positives (TP):  {tp:>6} - Correctly predicted diabetes")
+    print(f"    True Negatives (TN):  {tn:>6} - Correctly predicted no diabetes")
+    print(f"    False Positives (FP): {fp:>6} - Incorrectly predicted diabetes")
+    print(f"    False Negatives (FN): {fn:>6} - Missed diabetes cases")
+    print(f"    True Positives (TP):  {tp:>6} - Correctly predicted diabetes")
     
     # Saves confusion matrix plot
     cm_path = os.path.join(results_dir, f'confusion_matrix_{model_name.replace(" ", "_")}.png')
@@ -356,7 +356,7 @@ def evaluate_model(model, model_name, X_train, y_train, X_test, y_test, results_
     
     # Saves classification report to the results file
     report_path = os.path.join(results_dir, f'classification_report_{model_name.replace(" ", "_")}.txt')
-    with open(report_path, 'w') as f:
+    with open(report_path, 'w', encoding='utf-8') as f:
         f.write(f"Classification Report - {model_name}\n")
         f.write("="*70 + "\n\n")
         f.write(classification_report(y_test, y_pred, 
@@ -483,7 +483,7 @@ def plot_feature_importance(model, model_name, feature_names, results_dir, top_n
         importances = model.feature_importances_
     elif hasattr(model, 'named_steps'):
         # For pipeline models, check the last step
-        for step_name, step_model in model.named_steps.items():
+        for step_model in model.named_steps.values():
             if hasattr(step_model, 'feature_importances_'):
                 importances = step_model.feature_importances_
                 break
@@ -499,8 +499,8 @@ def plot_feature_importance(model, model_name, feature_names, results_dir, top_n
     
     # Plots feature importance
     plt.figure(figsize=(10, 8))
-    bars = plt.barh(range(len(feature_imp)), feature_imp['importance'], 
-                    color='steelblue', edgecolor='navy', linewidth=1.5)
+    plt.barh(range(len(feature_imp)), feature_imp['importance'], 
+             color='steelblue', edgecolor='navy', linewidth=1.5)
     plt.yticks(range(len(feature_imp)), feature_imp['feature'])
     plt.xlabel('Feature Importance', fontsize=12, fontweight='bold')
     plt.title(f'Top {top_n} Feature Importance - {model_name}', 
@@ -509,7 +509,7 @@ def plot_feature_importance(model, model_name, feature_names, results_dir, top_n
     plt.grid(axis='x', alpha=0.3, linestyle='--')
     
     # Adds value labels on bars
-    for i, (idx, row) in enumerate(feature_imp.iterrows()):
+    for i, (_, row) in enumerate(feature_imp.iterrows()):
         plt.text(row['importance'], i, f' {row["importance"]:.4f}', 
                 va='center', fontsize=9)
     
@@ -519,7 +519,6 @@ def plot_feature_importance(model, model_name, feature_names, results_dir, top_n
     plt.savefig(plot_path, dpi=300, bbox_inches='tight')
     print(f"  ✓ Saved feature importance: {os.path.basename(plot_path)}")
     plt.close()
-
 
 def plot_metrics_heatmap(comparison_df, results_dir):
     """
@@ -570,7 +569,7 @@ def plot_metrics_radar(comparison_df, results_dir):
     angles = np.linspace(0, 2 * np.pi, num_metrics, endpoint=False).tolist()
     angles += angles[:1]  # Complete the circle
     
-    fig, ax = plt.subplots(figsize=(10, 10), subplot_kw=dict(projection='polar'))
+    _, ax = plt.subplots(figsize=(10, 10), subplot_kw=dict(projection='polar'))
     
     # Plots each model in the radar chart
     colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
@@ -609,7 +608,7 @@ def plot_comparison(comparison_df, results_dir):
     results_dir : str
         Directory to save the plot
     """
-    fig, ax = plt.subplots(figsize=(12, 6))
+    _, ax = plt.subplots(figsize=(12, 6))
     
     # Prepares the data for plotting
     metrics = ['accuracy', 'precision', 'recall', 'f1_score', 'roc_auc']
@@ -639,7 +638,6 @@ def plot_comparison(comparison_df, results_dir):
     plt.savefig(plot_path, dpi=300, bbox_inches='tight')
     print(f"  ✓ Saved comparison bar chart: {os.path.basename(plot_path)}")
     plt.close()
-
 
 def compare_models(results_dict, models_predictions, trained_models, X_train, y_test, results_dir):
     """
@@ -702,20 +700,20 @@ def compare_models(results_dict, models_predictions, trained_models, X_train, y_
     # Overall best model (by F1-score, as it balances precision and recall)
     best_model = best_model_f1
     
-    print("\n  Best F1-Score: {best_model_f1} ({best_f1:.4f})")
-    print("  Best Recall:    {best_model_recall} ({best_recall:.4f})")
+    print(f"\n  Best F1-Score: {best_model_f1} ({best_f1:.4f})")
+    print(f"  Best Recall:    {best_model_recall} ({best_recall:.4f})")
     
     print("\n[4] Overall Best Model (Selected by F1-Score):")
     print("-" * 70)
-    print("  🏆 WINNER: {best_model}")
-    print("  Best F1-Score: {best_f1:.4f}")
+    print(f"  🏆 WINNER: {best_model}")
+    print(f"  Best F1-Score: {best_f1:.4f}")
     print("  (F1-Score balances precision and recall, ideal for imbalanced datasets)")
     print("\n  Complete Performance:")
-    print("    Accuracy:  {comparison_df.loc[best_model, 'accuracy']:.4f}")
-    print("    Precision: {comparison_df.loc[best_model, 'precision']:.4f}")
-    print("    Recall:    {comparison_df.loc[best_model, 'recall']:.4f} ⭐ (Key metric for minority class)")
-    print("    F1-Score:  {comparison_df.loc[best_model, 'f1_score']:.4f} ⭐ (Key metric for imbalanced data)")
-    print("    ROC-AUC:   {comparison_df.loc[best_model, 'roc_auc']:.4f}")
+    print(f"    Accuracy:  {comparison_df.loc[best_model, 'accuracy']:.4f}")
+    print(f"    Precision: {comparison_df.loc[best_model, 'precision']:.4f}")
+    print(f"    Recall:    {comparison_df.loc[best_model, 'recall']:.4f} ⭐ (Key metric for minority class)")
+    print(f"    F1-Score:  {comparison_df.loc[best_model, 'f1_score']:.4f} ⭐ (Key metric for imbalanced data)")
+    print(f"    ROC-AUC:   {comparison_df.loc[best_model, 'roc_auc']:.4f}")
     
     # Ranks all models with a focus on Recall and F1-Score as we have an imbalanced dataset
     print("\n[5] Model Rankings (Prioritizing Recall & F1-Score):")
