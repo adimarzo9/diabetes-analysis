@@ -5,6 +5,11 @@ Which model best predicts diabetes : Logistic Regression, Random Forest or XGBoo
 
 # Setup :
 
+Make Sure you are in the right directory : 
+```bash
+cd capstone_project/diabetes_analysis
+``
+
 ### Using Conda :
             
 ### Create environment from environment.yml
