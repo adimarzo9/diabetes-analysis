@@ -61,7 +61,7 @@ def load_data(data_path=None):
                     if os.path.exists(alt_path2):
                         data_path = alt_path2
                 except:
-                    pass  # If sys.argv is not available, skip this attempt
+                    pass
     
     # Load the CSV file
     print("="*70)
