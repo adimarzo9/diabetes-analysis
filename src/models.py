@@ -18,11 +18,11 @@ from sklearn.preprocessing import StandardScaler
 # Imports xgboost with helpful error message if not available
 try:
     import xgboost as xgb
-except ImportError:
+except ImportError as exc:
     raise ImportError(
         "XGBoost is not installed. Please install it using: pip install xgboost\n"
         "Or add it to your conda environment: conda install -c conda-forge xgboost"
-    )
+    ) from exc
 
 def get_models():
     """
