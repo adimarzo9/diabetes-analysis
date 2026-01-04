@@ -4,8 +4,8 @@
 Which model best predicts diabetes : Logistic Regression, Random Forest or XGBoost ?
 
 # Setup :
-
 Make Sure you are in the right directory : 
+
 ```bash
 cd capstone_project/diabetes_analysis
 ``
