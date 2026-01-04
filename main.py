@@ -105,7 +105,9 @@ def main():
             columns=X_train.columns,
             index=range(len(X_train_resampled))
         )
-    y_train_resampled = pd.Series(y_train_resampled, name=y_train.name)
+    # use name if available, otherwise default to 'target'
+    y_name = getattr(y_train, "name", "target")
+    y_train_resampled = pd.Series(y_train_resampled, name=y_name)
     
     # Uses resampled data for training
     X_train = X_train_resampled
@@ -155,8 +157,9 @@ def main():
     print("\n" + "█"*70)
     print("STEP 7: MODEL COMPARISON AND FINAL REPORT")
     print("█"*70)
-    compare_models(results_dict, models_predictions, trained_models, 
-                   X_train, y_test, results_dir)
+    # pass X_test (not X_train) so comparisons / visualizations use the hold-out test set
+    compare_models(results_dict, models_predictions, trained_models,
+                   X_test, y_test, results_dir)
     
     # ========================================================================
     # Final Summary
