@@ -16,7 +16,7 @@ conda env create -f environment.yml
 ### Activate the environment
 
 ```bash
-conda activate diabetes_analysis project
+conda activate diabetes_analysis
 ```
 
 ### Install XGBoost and imbalanced-learn (not included in environment.yml)
