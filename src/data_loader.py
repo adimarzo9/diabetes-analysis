@@ -60,8 +60,9 @@ def load_data(data_path=None):
                     alt_path2 = os.path.normpath(alt_path2)
                     if os.path.exists(alt_path2):
                         data_path = alt_path2
-                except:
-                    pass
+                except Exception as e:
+                    # Log the exception so debugging is easier instead of silently ignoring it
+                    print(f"Warning: failed to check alternative path based on script location: {e}")
     
     # Load the CSV file
     print("="*70)
@@ -73,7 +74,7 @@ def load_data(data_path=None):
     if not os.path.exists(data_path):
         error_msg = f"✗ Error: File not found at {data_path}\n"
         error_msg += f"  Current working directory: {os.getcwd()}\n"
-        error_msg += f"  Please ensure the file exists at: data/raw/diabetes_analysis.csv"
+        error_msg += "  Please ensure the file exists at: data/raw/diabetes_analysis.csv"
         print(error_msg)
         raise FileNotFoundError(error_msg)
     
@@ -316,7 +317,7 @@ def prepare_data(data, test_size=0.2, random_state=42):
     print(f"  Train size: {1-test_size:.0%} ({int(len(data) * (1-test_size))} samples)")
     print(f"  Test size:  {test_size:.0%} ({int(len(data) * test_size)} samples)")
     print(f"  Random state: {random_state} (for reproducibility)")
-    print(f"  Stratified: Yes (maintains class distribution)")
+    print("  Stratified: Yes (maintains class distribution)")
     
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, 
