@@ -8,7 +8,7 @@ Make Sure you are in the right directory :
 
 ```bash
 cd capstone_project/diabetes_analysis
-``
+```
 
 ### Using Conda :
             
