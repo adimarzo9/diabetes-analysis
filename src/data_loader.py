@@ -60,10 +60,9 @@ def load_data(data_path=None):
                     alt_path2 = os.path.normpath(alt_path2)
                     if os.path.exists(alt_path2):
                         data_path = alt_path2
-                except Exception as e:
-                    # Log the exception so debugging is easier instead of silently ignoring it
+                except (IndexError, OSError, TypeError) as e:
                     print(f"Warning: failed to check alternative path based on script location: {e}")
-    
+                    
     # Load the CSV file
     print("="*70)
     print("LOADING DATASET")
