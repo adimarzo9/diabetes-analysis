@@ -287,8 +287,8 @@ def evaluate_model(model, model_name, X_train, y_train, X_test, y_test, results_
     print("  Generating predictions on test set...", end=" ", flush=True)
     y_pred, y_pred_proba = make_predictions(trained_model, X_test)
     print("✓ Complete")
-    print(f"  Predicted {len(y_pred)} samples")
-    print(f"  Class distribution: {np.bincount(y_pred)}")
+    print("  Predicted {len(y_pred)} samples")
+    print("  Class distribution: {np.bincount(y_pred)}")
     
     # Computes the evaluation metrics
     print("\n[3] Computing Evaluation Metrics:")
@@ -296,15 +296,15 @@ def evaluate_model(model, model_name, X_train, y_train, X_test, y_test, results_
     metrics = compute_metrics(y_test, y_pred, y_pred_proba)
     
     # Prints evaluation metrics in structured format
-    print(f"\n  Test Set Performance Metrics:")
+    print("\n  Test Set Performance Metrics:")
     print("  " + "-" * 60)
-    print(f"  {'Metric':<20} {'Score':<15} {'Interpretation'}")
+    print("  {'Metric':<20} {'Score':<15} {'Interpretation'}")
     print("  " + "-" * 60)
-    print(f"  {'Accuracy':<20} {metrics['accuracy']:>6.4f}        {'Proportion of correct predictions'}")
-    print(f"  {'Precision':<20} {metrics['precision']:>6.4f}        {'True positives / (TP + FP)'}")
-    print(f"  {'Recall':<20} {metrics['recall']:>6.4f}        {'True positives / (TP + FN)'}")
-    print(f"  {'F1-Score':<20} {metrics['f1_score']:>6.4f}        {'Harmonic mean of precision & recall'}")
-    print(f"  {'ROC-AUC':<20} {metrics['roc_auc']:>6.4f}        {'Area under ROC curve'}")
+    print("  {'Accuracy':<20} {metrics['accuracy']:>6.4f}        {'Proportion of correct predictions'}")
+    print("  {'Precision':<20} {metrics['precision']:>6.4f}        {'True positives / (TP + FP)'}")
+    print("  {'Recall':<20} {metrics['recall']:>6.4f}        {'True positives / (TP + FN)'}")
+    print("  {'F1-Score':<20} {metrics['f1_score']:>6.4f}        {'Harmonic mean of precision & recall'}")
+    print("  {'ROC-AUC':<20} {metrics['roc_auc']:>6.4f}        {'Area under ROC curve'}")
     print("  " + "-" * 60)
     
     # Generates confusion matrix
@@ -315,19 +315,19 @@ def evaluate_model(model, model_name, X_train, y_train, X_test, y_test, results_
     # Prints confusion matrix
     print("\n  Confusion Matrix:")
     print("  " + "-" * 40)
-    print(f"  {'':<15} {'Predicted No':<15} {'Predicted Yes':<15}")
+    print("  {'':<15} {'Predicted No':<15} {'Predicted Yes':<15}")
     print("  " + "-" * 40)
-    print(f"  {'Actual No':<15} {cm[0,0]:<15} {cm[0,1]:<15}")
-    print(f"  {'Actual Yes':<15} {cm[1,0]:<15} {cm[1,1]:<15}")
+    print("  {'Actual No':<15} {cm[0,0]:<15} {cm[0,1]:<15}")
+    print("  {'Actual Yes':<15} {cm[1,0]:<15} {cm[1,1]:<15}")
     print("  " + "-" * 40)
     
     # Calculates additional metrics from confusion matrix
     tn, fp, fn, tp = cm.ravel()
-    print(f"\n  Detailed Breakdown:")
-    print(f"    True Negatives (TN):  {tn:>6} - Correctly predicted no diabetes")
-    print(f"    False Positives (FP): {fp:>6} - Incorrectly predicted diabetes")
-    print(f"    False Negatives (FN): {fn:>6} - Missed diabetes cases")
-    print(f"    True Positives (TP):  {tp:>6} - Correctly predicted diabetes")
+    print("\n  Detailed Breakdown:")
+    print("    True Negatives (TN):  {tn:>6} - Correctly predicted no diabetes")
+    print("    False Positives (FP): {fp:>6} - Incorrectly predicted diabetes")
+    print("    False Negatives (FN): {fn:>6} - Missed diabetes cases")
+    print("    True Positives (TP):  {tp:>6} - Correctly predicted diabetes")
     
     # Saves confusion matrix plot
     cm_path = os.path.join(results_dir, f'confusion_matrix_{model_name.replace(" ", "_")}.png')
@@ -702,20 +702,20 @@ def compare_models(results_dict, models_predictions, trained_models, X_train, y_
     # Overall best model (by F1-score, as it balances precision and recall)
     best_model = best_model_f1
     
-    print(f"\n  Best F1-Score: {best_model_f1} ({best_f1:.4f})")
-    print(f"  Best Recall:    {best_model_recall} ({best_recall:.4f})")
+    print("\n  Best F1-Score: {best_model_f1} ({best_f1:.4f})")
+    print("  Best Recall:    {best_model_recall} ({best_recall:.4f})")
     
     print("\n[4] Overall Best Model (Selected by F1-Score):")
     print("-" * 70)
-    print(f"  🏆 WINNER: {best_model}")
-    print(f"  Best F1-Score: {best_f1:.4f}")
-    print(f"  (F1-Score balances precision and recall, ideal for imbalanced datasets)")
-    print(f"\n  Complete Performance:")
-    print(f"    Accuracy:  {comparison_df.loc[best_model, 'accuracy']:.4f}")
-    print(f"    Precision: {comparison_df.loc[best_model, 'precision']:.4f}")
-    print(f"    Recall:    {comparison_df.loc[best_model, 'recall']:.4f} ⭐ (Key metric for minority class)")
-    print(f"    F1-Score:  {comparison_df.loc[best_model, 'f1_score']:.4f} ⭐ (Key metric for imbalanced data)")
-    print(f"    ROC-AUC:   {comparison_df.loc[best_model, 'roc_auc']:.4f}")
+    print("  🏆 WINNER: {best_model}")
+    print("  Best F1-Score: {best_f1:.4f}")
+    print("  (F1-Score balances precision and recall, ideal for imbalanced datasets)")
+    print("\n  Complete Performance:")
+    print("    Accuracy:  {comparison_df.loc[best_model, 'accuracy']:.4f}")
+    print("    Precision: {comparison_df.loc[best_model, 'precision']:.4f}")
+    print("    Recall:    {comparison_df.loc[best_model, 'recall']:.4f} ⭐ (Key metric for minority class)")
+    print("    F1-Score:  {comparison_df.loc[best_model, 'f1_score']:.4f} ⭐ (Key metric for imbalanced data)")
+    print("    ROC-AUC:   {comparison_df.loc[best_model, 'roc_auc']:.4f}")
     
     # Ranks all models with a focus on Recall and F1-Score as we have an imbalanced dataset
     print("\n[5] Model Rankings (Prioritizing Recall & F1-Score):")
