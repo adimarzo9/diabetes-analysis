@@ -15,7 +15,12 @@ demographic and clinical features.
 import os
 import sys
 import time
-import pandas as pd
+try:
+    import pandas as pd
+except ImportError as e:
+    raise RuntimeError(
+        "pandas is required by main.py. Install it with: python -m pip install pandas"
+    ) from e
 
 # Adds src directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
