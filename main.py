@@ -138,7 +138,7 @@ def main():
     for idx, (model_name, model) in enumerate(models.items(), 1):
         print(f"\n[{idx}/{len(models)}] Processing: {model_name}")
         
-        metrics, trained_model, y_pred_proba, cv_results = evaluate_model(
+        metrics, trained_model, y_pred_proba, _ = evaluate_model(
             model, model_name,
             X_train, y_train,
             X_test, y_test,
@@ -200,7 +200,7 @@ def main():
     print(" " * 15 + "FINAL RECOMMENDATION")
     print("="*70)
     print(f"\n🏆 Best Model for Diabetes Prediction: {best_model}")
-    print(f"\n   Performance Metrics:")
+    print("\n   Performance Metrics:")
     print(f"     • Accuracy:  {best_metrics['accuracy']:.4f}")
     print(f"     • Precision: {best_metrics['precision']:.4f}")
     print(f"     • Recall:    {best_metrics['recall']:.4f}")
