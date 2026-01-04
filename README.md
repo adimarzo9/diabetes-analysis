@@ -10,6 +10,11 @@ Make Sure you are in the right directory :
 cd capstone_project/diabetes_analysis
 ```
 
+Make sure you are using the correct interpreter 
+
+1. In the search bar, type ">Python : Select Interpreter"
+2. Select the correct file ".../conda/envs/diabetes_analysis/bin/python
+
 ### Using Conda :
             
 ### Create environment from environment.yml
